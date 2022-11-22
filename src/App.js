@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from "axios";
+import {useData, useSetData} from './DataContext'
+import Output from './Output';
 
 function App() {
   
@@ -8,6 +10,8 @@ function App() {
   const [ingr, setIngr] = useState();
   const appId = "18be3938";
   const apiKey = "a390e50edb812f7ef6d5a8279bae9a71";
+  const data = useData();
+  const setData = useSetData();
 
   const dataFetch = () => {
     const options = {
@@ -29,7 +33,12 @@ function App() {
         ingr: `${ingr}`
     })
 
-    fetch(`https://api.edamam.com/api/nutrition-data?${params}`).then(res => res.json()).then((data) => console.log(data))
+    fetch(`https://api.edamam.com/api/nutrition-data?${params}`).
+    then(res => res.json()).
+    then((data) => {
+      console.log(data);
+      setData(data);
+    })
 
     /*axios.post(options).then(function (response) {
       console.log(response.data);
@@ -56,7 +65,7 @@ function App() {
       placeholder="product name"
           onChange={setTerm}
             type="text"
-            className="h-[6%] border rounded-xl text-center"
+            className="hidden h-[6%] border rounded-xl text-center"
           ></input>
           <input
           placeholder="recipe ingredients"
@@ -69,6 +78,7 @@ function App() {
           className="text-xl shadow-xl rounded bg-orange-300 p-2 m-2 hover:scale-[125%]">
             SEARCH
           </button>
+          <Output />
     </div>
   );
 }
