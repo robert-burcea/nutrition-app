@@ -60,7 +60,7 @@ function App() {
   }
 
   return (
-    <div className="w-full h-screen mx-auto max-w-[96%] m-2 p-2 border rounded shadow-xl flex flex-col items-center bg-gray-200 bg-opacity-60 touch-none">
+    <div className="w-full h-full mx-auto max-w-[96%] m-2 p-2 border rounded shadow-xl flex flex-col items-center bg-gray-200 bg-opacity-60 touch-none">
       <input
       placeholder="product name"
           onChange={setTerm}
@@ -68,17 +68,17 @@ function App() {
             className="hidden h-[6%] border rounded-xl text-center"
           ></input>
           <input
-          placeholder="recipe ingredients"
+          placeholder="ingredient(EN) gramaj"
           onChange={setTheRecipe}
             type="text"
-            className="h-[14%] border rounded-xl text-center"
+            className="h-[80px] border rounded-xl text-center"
           ></input>
           <button 
           onClick={() => submitSearchTerm()}
           className="text-xl shadow-xl rounded bg-orange-300 p-2 m-2 hover:scale-[125%]">
             SEARCH
           </button>
-          <Output />
+          {data ? <Output /> : <div></div>}
     </div>
   );
 }
