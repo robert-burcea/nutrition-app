@@ -8,6 +8,7 @@ const Output = () => {
 
   return (
     <div className="w-full mx-auto max-w-[96%] m-2 p-2 border rounded shadow-xl flex flex-col items-center bg-gray-200 bg-opacity-60">
+        {data?.error === 'low_quality' ? <div>Numele unui ingredient introdus este gresit!</div> :
         <div className="flex flex-col items-center justify-center">
         <p className="font-bold text-xl">Ingredients:</p>
         <p className="text-center">
@@ -23,7 +24,7 @@ const Output = () => {
             + '/' + (Math.floor(data?.totalNutrients.FAPU.quantity) + Math.floor(data?.totalNutrients.FAMS.quantity)) + 'g unsaturated fat' +
             '/' + Math.floor(data?.totalNutrients.SUGAR.quantity) + 'g sugar' + '/' + Math.floor(data?.totalNutrients.NA.quantity) + 'mg salt'}
         </p>
-        </div>
+        </div>}
     </div>
   )
 }
