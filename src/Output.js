@@ -9,10 +9,6 @@ const Output = () => {
   return (
     <div className="w-full mx-auto max-w-[96%] m-2 p-2 border rounded shadow-xl flex flex-col items-center bg-gray-200 bg-opacity-60">
         <div className="flex flex-col items-center justify-center">
-        <p className="font-bold text-xl">Name:</p>
-        <p className="">
-            {data?.ingredients[0]?.parsed[0]?.food}
-        </p>
         <p className="font-bold text-xl">Ingredients:</p>
         <p className="text-center">
             {data?.ingredients?.map((ingr) => {return <>{ingr.text + ", "}</>})}
