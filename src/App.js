@@ -17,7 +17,7 @@ function App() {
     const options = {
       method: 'POST',
       cache:'no-cache',
-      url: `https://api.edamam.com/api/nutrition-details`,
+      url: `https://api.edamam.com/api/nutrition-data`,
       headers: {
         'Content-Type': 'application/json'
       },
@@ -51,7 +51,7 @@ function App() {
     setTitle(e.target.value)
   }
   const setTheRecipe = (e) => {
-    let recipe = e.target.value.split(' ');
+    let recipe = e.target.value;
     setIngr(recipe)
   }
   const submitSearchTerm = () => {
@@ -70,9 +70,14 @@ function App() {
           <input
           placeholder="ingredient(EN) gramaj"
           onChange={setTheRecipe}
-            type="text"
+            type="textarea"
             className="h-[80px] border rounded-xl text-center"
           ></input>
+          <textarea
+          placeholder="ingredient(EN) gramaj"
+          onChange={setTheRecipe}
+            type="textarea"
+            className="h-[80px] border rounded-xl text-center" />
           <button 
           onClick={() => submitSearchTerm()}
           className="text-xl shadow-xl rounded bg-orange-300 p-2 m-2 hover:scale-[125%]">
