@@ -14,43 +14,18 @@ const Output = () => {
             {data?.ingredients[0]?.parsed[0]?.food}
         </p>
         <p className="font-bold text-xl">Ingredients:</p>
-        <p className="">
+        <p className="text-center">
             {data?.ingredients?.map((ingr) => {return <>{ingr.text + ", "}</>})}
         </p>
         <p className="font-bold text-xl">Calories:</p>
         <p className="">
             {data?.calories}
         </p>
-        <p className="font-bold text-xl">Nutrients:</p>
-        <p>
-            {data?.totalNutrients.SUGAR.label + ' ' + 
-            Math.floor(data?.totalNutrients.SUGAR.quantity) + ' ' + 
-            data?.totalNutrients.SUGAR.unit}
-        </p>
-        <p>
-            {data?.totalNutrients.NA.label + ' ' + 
-            Math.floor(data?.totalNutrients.NA.quantity) + ' ' + 
-            data?.totalNutrients.NA.unit}
-        </p>
-        <p>
-            {data?.totalNutrients.PROCNT.label + ' ' + 
-            Math.floor(data?.totalNutrients.PROCNT.quantity) + ' ' + 
-            data?.totalNutrients.PROCNT.unit}
-        </p>
-        <p>
-            {data?.totalNutrients.FAT.label + ' ' + 
-            Math.floor(data?.totalNutrients.FAT.quantity) + ' ' + 
-            data?.totalNutrients.FAT.unit}
-        </p>
-        <p>
-            {data?.totalNutrients.FAMS.label + ' ' + 
-            Math.floor(data?.totalNutrients.FAMS.quantity) + ' ' + 
-            data?.totalNutrients.FAMS.unit}
-        </p>
-        <p>
-            {data?.totalNutrients.FAPU.label + ' ' + 
-            Math.floor(data?.totalNutrients.FAPU.quantity) + ' ' + 
-            data?.totalNutrients.FAPU.unit}
+        <p className="font-bold text-xl">Menu Format Calories:</p>
+        <p className="text-center">
+            {data?.calories + 'kcal' + '/' + Math.floor(data?.totalNutrients.PROCNT.quantity) + 'g protein' + '/' + Math.floor(data?.totalNutrients.FAT.quantity) + 'g fat'
+            + '/' + (Math.floor(data?.totalNutrients.FAPU.quantity) + Math.floor(data?.totalNutrients.FAMS.quantity)) + 'g unsaturated fat' +
+            '/' + Math.floor(data?.totalNutrients.SUGAR.quantity) + 'g sugar' + '/' + Math.floor(data?.totalNutrients.NA.quantity) + 'mg salt'}
         </p>
         </div>
     </div>
