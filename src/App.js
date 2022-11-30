@@ -14,44 +14,27 @@ function App() {
   const setData = useSetData();
 
   const dataFetch = () => {
-    const options = {
-      method: 'POST',
-      cache:'no-cache',
-      url: `https://api.edamam.com/api/nutrition-data`,
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      params: {
-        app_id: `${appId}`,
-        app_key: `${apiKey}`,
-        body: JSON.stringify({title, ingr}),
-      }
-    };
-    const params = new URLSearchParams({
-      app_id: `${appId}`,
-        app_key: `${apiKey}`,
-        ingr: `${ingr}`
-    })
 
-    fetch(`https://api.edamam.com/api/nutrition-data?${params}`).
+    fetch(`https://api.edamam.com/api/nutrition-details?app_id=${appId}&app_key=${apiKey}`, {
+      method: 'POST',
+      cache: 'no-cache',
+      headers: {
+        'Content-Type':'application/json'
+      },
+      body: JSON.stringify({title, ingr})
+    }).
     then(res => res.json()).
     then((data) => {
       console.log(data);
       setData(data);
     })
-
-    /*axios.post(options).then(function (response) {
-      console.log(response.data);
-    }).catch(function (error) {
-      console.error(error);
-    });*/
   }
 
   const setTerm = (e) => {
     setTitle(e.target.value)
   }
   const setTheRecipe = (e) => {
-    let recipe = e.target.value;
+    let recipe = e.target.value.split('\n');
     setIngr(recipe)
   }
   const submitSearchTerm = () => {
@@ -65,19 +48,13 @@ function App() {
       placeholder="product name"
           onChange={setTerm}
             type="text"
-            className="hidden h-[6%] border rounded-xl text-center"
-          ></input>
-          <input
-          placeholder="ingredient(EN) gramaj"
-          onChange={setTheRecipe}
-            type="textarea"
-            className="h-[80px] border rounded-xl text-center"
+            className="h-[6%] border rounded-xl text-center"
           ></input>
           <textarea
-          placeholder="ingredient(EN) gramaj"
+          placeholder="gramaj ingredient(EN)"
           onChange={setTheRecipe}
             type="textarea"
-            className="h-[80px] border rounded-xl text-center" />
+            className="w-[40%] h-[160px] border rounded-xl text-center" />
           <button 
           onClick={() => submitSearchTerm()}
           className="text-xl shadow-xl rounded bg-orange-300 p-2 m-2 hover:scale-[125%]">
