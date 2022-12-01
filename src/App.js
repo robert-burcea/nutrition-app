@@ -35,7 +35,7 @@ function App() {
 
   const firebaseSaveRecipe = () => {
     if(!title || !data){
-      alert("Va rog sa denumiti titlul produsului")
+      alert("Va rog sa denumiti titlul produsului si sa alegeti ingredientele")
     }
     else {
       let newRecipes = foodData || [];
