@@ -6,16 +6,37 @@ import db from './firebase'
 import { 
     collection, onSnapshot, doc, setDoc
   } from 'firebase/firestore'
+import Turnstone from 'turnstone'
 
 function App() {
   
-  const [foodData, setFoodData] = useState();
+  const [foodData, setFoodData] = useState([]);
   const [title, setTitle] = useState();
   const [ingr, setIngr] = useState();
+  const [ready, setReady] = useState(false)
   const appId = "18be3938";
   const apiKey = "a390e50edb812f7ef6d5a8279bae9a71";
   const data = useData();
   const setData = useSetData();
+
+  const styles = {
+    input: 'w-full border py-2 px-4 text-lg outline-none rounded-md',
+    listbox: 'bg-neutral-900 w-full text-slate-50 rounded-md',
+    highlightedItem: 'bg-neutral-800',
+    query: 'text-oldsilver-800 placeholder:text-slate-600',
+    typeahead: 'text-slate-500',
+    clearButton:
+      'absolute inset-y-0 text-lg right-0 w-10 inline-flex items-center justify-center bg-netural-700 hover:text-red-500',
+    noItems: 'cursor-default text-center my-20',
+    match: 'font-semibold',
+    groupHeading: 'px-5 py-3 text-pink-500',
+  }
+
+  const listbox = {
+    displayField: 'recipes',
+    data: foodData,
+    searchType: 'contains',
+  }
 
   const firebaseFetch = () => {
         
@@ -46,7 +67,7 @@ function App() {
     console.log("New Recipe:", newRecipes)
     setDoc(doc(db, "recipes", "data"), {
       recipes: newRecipes
-    }).then(console.log("Doc set!"))
+    }).then(setReady(true))
     }
   }
 
@@ -65,14 +86,17 @@ function App() {
     }).
     then(res => res.json()).
     then((data) => {
-      console.log(data);
       setData(data);
+      setReady(false)
+      console.log("Data in fetch", data);
     })
     }
   }
 
-  const setTerm = (e) => {
-    setTitle(e.target.value)
+  const setTerm = (query) => {
+    console.log("Turnstone setTerm Fired")
+    setTitle(query)
+    console.log(title)
   }
   const setTheRecipe = (e) => {
     let recipe = e.target.value.split('\n').filter(ingr => ingr !== "");
@@ -81,7 +105,11 @@ function App() {
   }
   const submitSearchTerm = () => {
     dataFetch();
-    console.log("Data fetched")
+  }
+  const onSelect = (selectedItem) => {
+    console.log("Turnstone onSelect Fired")
+    if(selectedItem)
+      setData(selectedItem?.data)
   }
 
   useEffect(() => {
@@ -90,28 +118,39 @@ function App() {
 
   return (
     <div className="w-full h-full mx-auto max-w-[96%] m-2 p-2 border rounded shadow-xl flex flex-col items-center bg-gray-200 bg-opacity-60 touch-none">
-      <input
-      placeholder="product name"
-          onChange={setTerm}
-            type="text"
-            className="h-[6%] border rounded-xl text-center"
-          ></input>
+          <Turnstone
+              id='search'
+              name='search'
+              autoFocus={true}
+              typeahead={true}
+              clearButton={true}
+              debounceWait={250}
+              listboxIsImmutable={true}
+              maxItems={6}
+              noItemsMessage="Nu am gasit nici un produs"
+              placeholder='Cauta produs dupa denumire'
+              listbox={listbox}
+              styles={styles}
+              onSelect={onSelect}
+              onChange={setTerm}
+  />
           <textarea
-          placeholder="gramaj ingredient(EN)"
+          placeholder={`Introdu ingredientele ca in exemplu: \n 50g corn \n 1g salt \n 20g oil`}
           onChange={setTheRecipe}
             type="textarea"
-            className="w-[40%] h-[160px] border rounded-xl text-center" />
+            className="w-[80%] h-[160px] border rounded-xl text-center" />
           <button 
           onClick={() => submitSearchTerm()}
           className="text-xl shadow-xl rounded bg-orange-300 p-2 m-2 hover:scale-[125%]">
-            SEARCH
+            CALCULEAZA VALORILE NUTRITIVE
           </button>
           <button 
           onClick={() => firebaseSaveRecipe()}
           className="text-xl shadow-xl rounded bg-green-300 p-2 m-2 hover:scale-[125%]">
             SALVEAZA RETETA
           </button>
-          {data ? <Output /> : <div></div>}
+          {ready ? <div className="text-green-600 text-2xl">Reteta a fost salvata!</div> : <></>}
+          {data ? <Output /> : <></> }
     </div>
   );
 }
