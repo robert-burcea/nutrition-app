@@ -80,14 +80,13 @@ function App() {
       method: 'POST',
       cache: 'no-cache',
       headers: {
-        'Content-Type':'application/json'
+        'Content-Type':'application/json',
+        'Accept': 'application/json'
       },
       body: JSON.stringify({title, ingr})
-    }).
-    then(res => res.json()).
-    then((data) => {
+    }).then(res => res.json()).then((data) => {
       setData(data);
-      setReady(false)
+      setReady(false);
       console.log("Data in fetch", data);
     })
     }
@@ -124,7 +123,7 @@ function App() {
               autoFocus={true}
               typeahead={true}
               clearButton={true}
-              debounceWait={250}
+              debounceWait={150}
               listboxIsImmutable={true}
               maxItems={6}
               noItemsMessage="Nu am gasit nici un produs"
