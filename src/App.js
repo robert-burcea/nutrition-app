@@ -140,12 +140,12 @@ function App() {
             className="w-[80%] h-[160px] border rounded-xl text-center" />
           <button 
           onClick={() => submitSearchTerm()}
-          className="text-xl shadow-xl rounded bg-orange-300 p-2 m-2 hover:scale-[125%]">
+          className="text-xl shadow-xl rounded bg-orange-300 p-2 m-2 hover:scale-[105%]">
             CALCULEAZA VALORILE NUTRITIVE
           </button>
           <button 
           onClick={() => firebaseSaveRecipe()}
-          className="text-xl shadow-xl rounded bg-green-300 p-2 m-2 hover:scale-[125%]">
+          className="text-xl shadow-xl rounded bg-green-300 p-2 m-2 hover:scale-[105%]">
             SALVEAZA RETETA
           </button>
           {ready ? <div className="text-green-600 text-2xl">Reteta a fost salvata!</div> : <></>}
