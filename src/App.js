@@ -8,6 +8,8 @@ import {
   } from 'firebase/firestore'
 import Turnstone from 'turnstone'
 import logo from './logo.png'
+import bg from './edamam-logo.jpg'
+import delirestLogo from './delirestLogo.png'
 
 
 function App() {
@@ -130,16 +132,24 @@ function App() {
   }, [selectRef])
 
   return (
-    <div className="w-full h-full mx-auto max-w-[96%] m-2 p-2 border rounded shadow-xl flex flex-col items-center bg-gray-200 bg-opacity-60 touch-none">
-      <img 
+    <div className="bg-gradient-to-r from-[#BBDBBE] to-[#DEEBDD] relative w-full h-full mx-auto max-w-[100%] max-h-[100%] p-2 border rounded shadow-xl flex flex-col items-center bg-gray-200 bg-opacity-60 touch-none">
+      <div className="md:absolute md:top-0 md:left-0 rounded">
+        <img 
       className="m-2"
       src={logo} 
       height={100} 
       width={200} 
       alt="Edamam Nutrition Analysis API"/>
+      <h2 className="text-[#77cc00] mx-6">Nutrition Analysis API</h2>
+      </div>
+      <img 
+      className="m-2 rounded-xl shadow-xl"
+      src={delirestLogo} 
+      height={100} 
+      width={200} 
+      alt="Edamam Nutrition Analysis API"/>
       <div className="text-xs m-3">
-        <h1 className="text-opacity-40">Aceasta aplicatie foloseste API-ul <br></br>
-          <a 
+        <h1 className="text-opacity-40"><a 
           href="https://developer.edamam.com/edamam-nutrition-api-demo"
           className="text-blue-800"
           >
@@ -179,11 +189,19 @@ function App() {
               <option value="gs">Garnituri Speciale</option>
             </select>
             {console.log(selectRef.current.value)}
-          <textarea
-          placeholder={`Introdu ingredientele ca in exemplu: \n 50g corn \n 1g salt \n 20g oil`}
+            <div className="relative w-[80%] h-[160px] text-center">
+              <img 
+                className="absolute rotate-[270deg] m-2 bottom-[35%] left-[-12%] sm:left-[-9%] md:left-[-7%] lg:left-[-5%] opacity-30"
+                src={logo} 
+                height={80} 
+                width={130} 
+                alt="Edamam Nutrition Analysis API"/>
+            <textarea
+          placeholder={`Introduceti ingredientele ca in exemplu: \n 50g corn \n 1g salt \n 20g oil`}
           onChange={setTheRecipe}
             type="textarea"
-            className="w-[80%] h-[160px] border rounded-xl text-center" />
+            className="w-[100%] h-[160px] border rounded-xl text-center" />
+            </div>
           <button 
           onClick={() => submitSearchTerm()}
           className="text-xl shadow-xl rounded bg-orange-300 p-2 m-2 hover:scale-[105%]">
