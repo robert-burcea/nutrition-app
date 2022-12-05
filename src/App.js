@@ -132,7 +132,7 @@ function App() {
   }, [selectRef])
 
   return (
-    <div className="bg-gradient-to-r from-[#BBDBBE] to-[#DEEBDD] relative w-full h-full mx-auto max-w-[100%] max-h-[100%] p-2 border rounded shadow-xl flex flex-col items-center bg-gray-200 bg-opacity-60 touch-none scroll-auto">
+    <div className="bg-gradient-to-r from-[#BBDBBE] to-[#DEEBDD] relative w-full h-full mx-auto max-w-[100%] max-h-[100%] p-2 border rounded shadow-xl flex flex-col items-center bg-gray-200 bg-opacity-60 scroll-auto">
       <div className="md:absolute md:top-0 md:left-0 rounded">
       <img 
       className="m-2"
