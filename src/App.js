@@ -134,20 +134,22 @@ function App() {
   return (
     <div className="bg-gradient-to-r from-[#BBDBBE] to-[#DEEBDD] relative w-full h-full mx-auto max-w-[100%] max-h-[100%] p-2 border rounded shadow-xl flex flex-col items-center bg-gray-200 bg-opacity-60 touch-none">
       <div className="md:absolute md:top-0 md:left-0 rounded">
-        <img 
+      <img 
       className="m-2"
+      src={delirestLogo} 
+      height={500} 
+      width={100} 
+      alt="Edamam Nutrition Analysis API"/>
+      </div>
+      <div className="m-2 p-2 rounded-xl shadow-xl">
+      <img 
+      className=""
       src={logo} 
       height={100} 
       width={200} 
       alt="Edamam Nutrition Analysis API"/>
       <h2 className="text-[#77cc00] mx-6">Nutrition Analysis API</h2>
       </div>
-      <img 
-      className="m-2 rounded-xl shadow-xl"
-      src={delirestLogo} 
-      height={100} 
-      width={200} 
-      alt="Edamam Nutrition Analysis API"/>
       <div className="text-xs m-3">
         <h1 className="text-opacity-40"><a 
           href="https://developer.edamam.com/edamam-nutrition-api-demo"
