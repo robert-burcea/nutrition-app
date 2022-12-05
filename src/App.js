@@ -7,6 +7,7 @@ import {
     collection, onSnapshot, doc, setDoc
   } from 'firebase/firestore'
 import Turnstone from 'turnstone'
+import logo from './logo.png'
 
 
 function App() {
@@ -130,6 +131,22 @@ function App() {
 
   return (
     <div className="w-full h-full mx-auto max-w-[96%] m-2 p-2 border rounded shadow-xl flex flex-col items-center bg-gray-200 bg-opacity-60 touch-none">
+      <img 
+      className="m-2"
+      src={logo} 
+      height={100} 
+      width={200} 
+      alt="Edamam Nutrition Analysis API"/>
+      <div className="text-xs m-3">
+        <h1 className="text-opacity-40">Aceasta aplicatie foloseste API-ul <br></br>
+          <a 
+          href="https://developer.edamam.com/edamam-nutrition-api-demo"
+          className="text-blue-800"
+          >
+            EDAMAM NUTRITION ANALYSIS API</a>
+          </h1>
+      </div>
+        <label >Cauta produsul sau alege titlul:</label>
           <Turnstone
               id='search'
               name='search'
@@ -153,7 +170,6 @@ function App() {
             id="categ" 
             ref={selectRef}>
             <option value="no-categ">Selectati o categorie</option>
-            <option value="ciorbe">Ciorbe</option>
               <option value="ciorbe">Ciorbe</option>
               <option value="fp">Fel Principal</option>
               <option value="garnituri">Garnituri</option>
@@ -171,7 +187,7 @@ function App() {
           <button 
           onClick={() => submitSearchTerm()}
           className="text-xl shadow-xl rounded bg-orange-300 p-2 m-2 hover:scale-[105%]">
-            CALCULEAZA VALORILE NUTRITIVE
+            CALCULEAZA VALORILE NUTRITIONALE
           </button>
           <button 
           onClick={() => firebaseSaveRecipe()}
