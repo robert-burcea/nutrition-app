@@ -65,6 +65,13 @@ function App() {
       alert("Va rog sa selectati categoria")
     else {
       let newRecipes = foodData || [];
+      newRecipes = newRecipes.forEach((el) => {
+        if(el.name.toLowerCase() === title.toLowerCase()){
+          el.data = data;
+          return;
+        }
+
+      })
     newRecipes.push({
       name: title,
       categ: selectRef.current.value,
