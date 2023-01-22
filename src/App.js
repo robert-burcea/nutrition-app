@@ -59,7 +59,7 @@ function App() {
     })
   }
 
-  const firebaseSaveRecipe = () => {
+  const firebaseSaveRecipe2 = () => {
     if(!title)
       alert("Va rog sa denumiti titlul produsului")
       else if(!data)
