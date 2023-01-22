@@ -15,10 +15,13 @@ import delirestLogo from './delirestLogo.png'
 function App() {
   
   const [foodData, setFoodData] = useState([]);
+  const [recipeSearch, setRecipeSearch] = useState([])
   const [title, setTitle] = useState();
   const [ingr, setIngr] = useState();
   const [categ, setCateg] = useState('');
   const [ready, setReady] = useState(false)
+  const foodSearchId = "6bc9f9ea"
+  const foodSearchApiKey = "9e4cc55a04c3a24230c70ff4e19a7f33	"
   const appId = "18be3938";
   const apiKey = "a390e50edb812f7ef6d5a8279bae9a71";
   const data = useData();
@@ -59,7 +62,7 @@ function App() {
     })
   }
 
-  const firebaseSaveRecipe2 = () => {
+  const firebaseSaveRecipe = () => {
     if(!title)
       alert("Va rog sa denumiti titlul produsului")
       else if(!data)
@@ -99,6 +102,26 @@ function App() {
       console.log("Data in fetch", data);
     })
     }
+  }
+
+  const foodNameFetch = () => {
+      fetch(`http://localhost:5000/fetch-recipe`, {
+      method: 'POST',
+      cache: 'no-cache',
+      headers: {
+        'Content-Type':'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        food: title, 
+        appId: foodSearchId,
+        apiKey: foodSearchApiKey
+      })
+    }).then(res => res.json()).then((data) => {
+      setRecipeSearch(data);
+      setReady(false);
+      console.log("Data in foodNameFetch", data);
+    })
   }
   
   const setCategory = () => {
@@ -175,6 +198,11 @@ function App() {
               onSelect={onSelect}
               onChange={setTerm}
   />
+      <button 
+          onClick={() => foodNameFetch()}
+          className="text-xl shadow-xl rounded bg-orange-300 p-2 m-2 hover:scale-[105%]">
+            CAUTA RETETA
+          </button>
           <label >Alegeti categoria produsului:</label>
             <select
             className="m-2" 
