@@ -16,6 +16,7 @@ function App() {
   
   const [foodData, setFoodData] = useState([]);
   const [recipeSearch, setRecipeSearch] = useState([])
+  const [searchType, setSearchType] = useState('')
   const [title, setTitle] = useState();
   const [ingr, setIngr] = useState();
   const [categ, setCateg] = useState('');
@@ -98,6 +99,7 @@ function App() {
       body: JSON.stringify({title, ingr})
     }).then(res => res.json()).then((data) => {
       setData(data);
+      setSearchType('analysis')
       setReady(false);
       console.log("Data in fetch", data);
     })
@@ -119,6 +121,7 @@ function App() {
       })
     }).then(res => res.json()).then((data) => {
       setRecipeSearch(data);
+      setSearchType('name')
       setReady(false);
       console.log("Data in foodNameFetch", data);
     })
@@ -243,7 +246,9 @@ function App() {
             SALVEAZA RETETA
           </button>
           {ready ? <div className="text-green-600 text-2xl">Reteta a fost salvata!</div> : <></>}
-          {data ? <Output /> : <></> }
+          {searchType === 'analysis' ? <Output recipe={data}/> : recipeSearch?.hits?.map((recipe) => {
+            <Output recipe={recipe} />
+          }) }
     </div>
   );
 }
