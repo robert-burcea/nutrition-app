@@ -21,10 +21,8 @@ const Output = () => {
         </p>
         <p className="font-bold text-xl">Menu Format Calories:</p>
         <p className="text-center">
-            {data?.calories + 'kcal' + '/' + Number(data?.totalNutrients.PROCNT.quantity).toFixed(1) + 'g protein' + '/' + Number(data?.totalNutrients.FIBTG.quantity).toFixed(1) + 'g fiber'
-             + '/' + Number(data?.totalNutrients.FAT.quantity).toFixed(1) + 'g fat' + '/' + Number(data?.totalNutrients.FAPU.quantity
-             + data?.totalNutrients.FAMS.quantity).toFixed(1) + 'g unsaturated fatty acids' + '/' 
-             + Number(data?.totalNutrients.SUGAR.quantity).toFixed(1) + 'g sugar' + '/' + Number(data?.totalNutrients.NA.quantity).toFixed(1) + 'mg salt'}
+            {'Valoare Energetică (kJ/kcal): ' + Number(4.18*data?.calories).toFixed(1) + '/' + data?.calories + ',' + ' Grăsimi (g): ' + Number(data?.totalNutrients.FAT.quantity).toFixed(1) + ' din care ' + ' Acizi grasi saturati: ' + Number(data?.totalNutrients?.FASAT.quantity).toFixed(1) + ',' 
+             + ' Glucide(g): ' + Number(data?.totalNutrients.CHOCDF.quantity).toFixed(1) + ' din care ' + 'Zaharuri(g): ' + Number(data?.totalNutrients.SUGAR.quantity).toFixed(1) + ',' + ' Proteine(g): ' + Number(data?.totalNutrients.PROCNT.quantity).toFixed(1) + ',' + ' Sare(g): ' + Number(data?.totalNutrients.NA.quantity/1000).toFixed(1)}
         </p>
         </div>}
     </div>
