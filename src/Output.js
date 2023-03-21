@@ -1,14 +1,38 @@
 import {useData, useSetData} from './DataContext'
 import React, {useState, useEffect} from 'react';
 
-const Output = () => {
+const Output = ({edamam}) => {
 
     const data = useData();
     const setData = useSetData();
 
   return (
     <div className="w-full mx-auto max-w-[96%] m-2 p-2 border rounded shadow-xl flex flex-col items-center bg-opacity-60">
-        {data?.error === 'low_quality' ? <div>Numele unui ingredient introdus este gresit sau sunt prea putine ingrediente</div> :
+        {data?.error === 'low_quality' ? <div>Numele unui ingredient introdus este gresit sau sunt prea putine ingrediente</div> : 
+        !edamam ? <div>
+           <div className="flex flex-col items-center justify-center">
+        <p className="font-bold text-xl">Ingrediente:</p>
+        <p className="text-center">
+            {data?.ingrediente}
+        </p>
+        <p className="font-bold text-xl">Valori nutritionale:</p>
+        <p className="">
+            {data?.infoNutritionale}
+        </p>
+        <p className="font-bold text-xl">Alergeni:</p>
+        <p className="text-center">
+          {data?.alergeni}
+        </p>
+        <p className="font-bold text-xl">Aditivi:</p>
+        <p className="text-center">
+          {data?.aditivi}
+        </p>
+        <p className="font-bold text-xl">Observatii:</p>
+        <p className="text-center">
+          {data?.observatii}
+        </p>
+        </div>
+        </div> :
         <div className="flex flex-col items-center justify-center">
         <p className="font-bold text-xl">Ingredients:</p>
         <p className="text-center">

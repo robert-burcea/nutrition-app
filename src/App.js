@@ -13,11 +13,11 @@ import delirestLogo from './delirestLogo.png'
 
 
 function App() {
-  
+  const [menuItems, setMenuItems] = useState([]);
+  const [edamam, setEdamam] = useState(false)
   const [foodData, setFoodData] = useState([]);
   const [title, setTitle] = useState();
   const [ingr, setIngr] = useState();
-  const [categ, setCateg] = useState('');
   const [ready, setReady] = useState(false)
   const appId = "18be3938";
   const apiKey = "a390e50edb812f7ef6d5a8279bae9a71";
@@ -39,7 +39,7 @@ function App() {
   }
 
   const listbox = {
-    displayField: 'name',
+    displayField: 'nume',
     data: foodData,
     searchType: 'contains',
   }
@@ -64,8 +64,6 @@ function App() {
       alert("Va rog sa denumiti titlul produsului")
       else if(!data)
         alert("Va rog sa selectati ingredientele si sa calculati valorile")
-      else if(selectRef.current.value === 'no-categ')
-      alert("Va rog sa selectati categoria")
     else {
       let newRecipes = foodData || [];
     newRecipes.push({
@@ -101,10 +99,6 @@ function App() {
     }
   }
   
-  const setCategory = () => {
-    console.log("Categoria:", selectRef.current.value)
-    setCateg(selectRef.current.value)
-  }
   const setTerm = (query) => {
     console.log("Turnstone setTerm Fired")
     setTitle(query)
@@ -116,16 +110,62 @@ function App() {
     setIngr(recipe)
   }
   const submitSearchTerm = () => {
+    setEdamam(true);
     dataFetch();
   }
   const onSelect = (selectedItem) => {
     console.log("Turnstone onSelect Fired")
     if(selectedItem)
-      setData(selectedItem?.data)
+      setData(selectedItem)
+  }
+
+  async function fetchMenuItems() {
+    try {
+      const response = await fetch('https://us-central1-delirest-app.cloudfunctions.net/app/scraped-data');
+      const data = await response.json();
+      console.log(data);
+      setMenuItems(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  function checkMenuItems(menuItems, foodData) {
+    var counter = 0;
+    menuItems.forEach(item => {
+      const exists = foodData.some(food => food.nume === item.nume);
+      if (!exists) {
+        counter = counter +1;
+        let newRecipes = foodData || [];
+        newRecipes.push({
+          nume: item.nume,
+          ingrediente: item.ingrediente,
+          infoNutritionale: item.infoNutritionale,
+          alergeni: item.alergeni,
+          aditivi: item.aditivi,
+          observatii: item.observatii,
+        })
+        console.log("New Recipe:", newRecipes)
+        setDoc(doc(db, "recipes", "data"), {
+          recipes: newRecipes
+        }).then(setReady(true))
+      }
+    });
+    if(counter > 0)
+      alert(`Am copiat cu success ${counter} de noi produse.`)
+    else
+      alert(`Nu au fost gasite produse noi.`)
+  }
+  const scrapeDeliGroup = () => {
+    fetchMenuItems();
+    checkMenuItems(menuItems, foodData);
   }
 
   useEffect(() => {
     firebaseFetch();
+  }, [])
+  useEffect(() => {
+    scrapeDeliGroup();
   }, [])
   useEffect(() => {
     console.log("Ref", selectRef.current.value)
@@ -175,22 +215,6 @@ function App() {
               onSelect={onSelect}
               onChange={setTerm}
   />
-          <label >Alegeti categoria produsului:</label>
-            <select
-            className="m-2" 
-            name="categ" 
-            id="categ" 
-            ref={selectRef}>
-            <option value="no-categ">Selectati o categorie</option>
-              <option value="ciorbe">Ciorbe</option>
-              <option value="fp">Fel Principal</option>
-              <option value="garnituri">Garnituri</option>
-              <option value="salate">Salate</option>
-              <option value="desert">Desert</option>
-              <option value="fps">Fel Principal Special</option>
-              <option value="gs">Garnituri Speciale</option>
-            </select>
-            {console.log(selectRef.current.value)}
             <div className="relative w-[80%] h-[160px] text-center">
               <img 
                 className="absolute rotate-[270deg] m-2 bottom-[35%] left-[-12%] sm:left-[-9%] md:left-[-7%] lg:left-[-5%] opacity-30"
@@ -202,7 +226,7 @@ function App() {
           placeholder={`Introduceti ingredientele ca in exemplu: \n 50g corn \n 1g salt \n 20g oil`}
           onChange={setTheRecipe}
             type="textarea"
-            className="w-[100%] h-[160px] border rounded-xl text-center" />
+            className="w-[100%] h-[160px] border rounded-xl text-center mt-1" />
             </div>
           <button 
           onClick={() => submitSearchTerm()}
@@ -210,12 +234,12 @@ function App() {
             CALCULEAZA VALORILE NUTRITIONALE
           </button>
           <button 
-          onClick={() => firebaseSaveRecipe()}
+          onClick={() => scrapeDeliGroup()}
           className="text-xl shadow-xl rounded bg-green-300 p-2 m-2 hover:scale-[105%]">
-            SALVEAZA RETETA
+            SCRAPE DELIGROUP
           </button>
-          {ready ? <div className="text-green-600 text-2xl">Reteta a fost salvata!</div> : <></>}
-          {data ? <Output /> : <></> }
+          {ready ? <div className="text-green-600 text-2xl">Noile retete au fost salvate!</div> : <></>}
+          {data ? edamam ? <Output edamam={true}/> : <Output edamam={false}/> : <></> }
     </div>
   );
 }
