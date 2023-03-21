@@ -165,9 +165,6 @@ function App() {
     firebaseFetch();
   }, [])
   useEffect(() => {
-    scrapeDeliGroup();
-  }, [])
-  useEffect(() => {
     console.log("Ref", selectRef.current.value)
   }, [selectRef])
 
@@ -236,7 +233,7 @@ function App() {
           <button 
           onClick={() => scrapeDeliGroup()}
           className="text-xl shadow-xl rounded bg-green-300 p-2 m-2 hover:scale-[105%]">
-            SCRAPE DELIGROUP
+            IMPORTA RETETELE DE AZI DE PE DELIGROUP
           </button>
           {ready ? <div className="text-green-600 text-2xl">Noile retete au fost salvate!</div> : <></>}
           {data ? edamam ? <Output edamam={true}/> : <Output edamam={false}/> : <></> }
